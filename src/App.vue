@@ -10,7 +10,6 @@
 
         <!--导航-->
         <el-aside width="200px">
-
           <el-row class="tac">
             <el-col :span="24">
               <el-menu default-active="1-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
@@ -27,15 +26,15 @@
                   </el-menu-item-group>
 
                   <el-menu-item-group>
-                    <el-menu-item index="1-2">电子</el-menu-item>
+                    <router-link to=""><el-menu-item index="1-2">电子</el-menu-item></router-link>
                   </el-menu-item-group>
 
                   <el-menu-item-group>
-                    <el-menu-item index="1-3">辅导</el-menu-item>
+                    <router-link to=""><el-menu-item index="1-3">辅导</el-menu-item></router-link>
                   </el-menu-item-group>
 
                   <el-menu-item-group>
-                    <el-menu-item index="1-4">其他</el-menu-item>
+                    <router-link to=""><el-menu-item index="1-4">其他</el-menu-item></router-link>
                   </el-menu-item-group>
 
                 </el-submenu>
@@ -97,22 +96,6 @@
                     <i class="el-icon-location"></i>
                     <span>消息推送管理</span>
                   </template>
-
-                  <!--<el-menu-item-group>
-                    <el-menu-item index="1-1">图书</el-menu-item>
-                  </el-menu-item-group>
-
-                  <el-menu-item-group>
-                    <el-menu-item index="1-2">电子</el-menu-item>
-                  </el-menu-item-group>
-
-                  <el-menu-item-group>
-                    <el-menu-item index="1-3">辅导</el-menu-item>
-                  </el-menu-item-group>
-
-                  <el-menu-item-group>
-                    <el-menu-item index="1-4">其他</el-menu-item>
-                  </el-menu-item-group>-->
 
                 </el-submenu>
               </el-menu>
