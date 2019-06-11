@@ -1,6 +1,0 @@
-const AAA = 'AAA'
-
-export default {
-
-  AAA
-}
