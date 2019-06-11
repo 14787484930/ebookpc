@@ -123,7 +123,7 @@
         <!--内容-->
         <el-main>
 
-          <el-row  >
+         <!-- <el-row  >
             <el-col :span="24">
 
                 <el-form :inline="true"  class="demo-form-inline" style="text-align:left">
@@ -142,7 +142,7 @@
                 </el-form>
 
             </el-col>
-          </el-row>
+          </el-row>-->
 
           <el-row :gutter="24" class="tac">
             <template>
@@ -187,6 +187,7 @@
               :total="50">
             </el-pagination>
             </el-row>
+          <book></book>
 
         </el-main>
 
@@ -196,6 +197,9 @@
 </template>
 
 <script>
+
+  import book from "./components/book/book.vue";
+
   export default {
     data(){
       return {
@@ -240,6 +244,9 @@
       onSubmit() {
         console.log('submit!');
       }
+    },
+    components:{
+      book
     }
   };
 </script>
