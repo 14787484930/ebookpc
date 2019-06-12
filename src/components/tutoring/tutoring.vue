@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>辅导内容</h1>
-    <p>{{books}}</p>
+    <!--<p>{{books}}</p>-->
   </div>
 </template>
 
@@ -17,7 +17,7 @@
 
     //组件加载完后执行的方法
     created:function(){
-      this.$store.dispatch('getbooks');
+      //this.$store.dispatch('getbooks');
     }
   }
 
