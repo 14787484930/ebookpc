@@ -71,11 +71,12 @@
         </el-table>
       </template>
     </el-row>
-    <el-row :gutter="24" class="tac">
+    <el-row :gutter="24" class="tac" style="margin-top: 20px;">
       <el-pagination
-        small
+        background
         layout="prev, pager, next"
-        :total="50">
+        :total="100"
+        @current-change="current_change">
       </el-pagination>
     </el-row>
 
@@ -96,6 +97,14 @@
     //组件加载完后执行的方法
     created:function(){
       this.$store.dispatch('getbooks');
+    },
+
+    methods: {
+      current_change(currentPage) {
+
+        alert(currentPage);
+
+      }
     }
   }
 

@@ -143,37 +143,7 @@
 
   export default {
     data(){
-      return {
-        tableData: [{
-          date: '2019-05-02',
-          name: 'Java编程思想',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2019-05-04',
-          name: '思修',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2019-05-01',
-          name: 'Mysql数据库',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2019-05-03',
-          name: 'SpringBoot',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }, {
-          date: '2019-05-03',
-          name: 'Mybatis',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }, {
-          date: '2019-05-03',
-          name: 'Vue',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }, {
-          date: '2019-05-03',
-          name: 'Vue全家桶',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }]
-      }
+      return '';
     },
     methods: {
       handleOpen(key, keyPath) {
