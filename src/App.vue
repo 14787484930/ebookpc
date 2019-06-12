@@ -22,7 +22,7 @@
                   </template>
 
                   <el-menu-item-group>
-                    <el-menu-item index="1-1">图书</el-menu-item>
+                    <router-link to="/books"><el-menu-item index="1-1">图书</el-menu-item></router-link>
                   </el-menu-item-group>
 
                   <el-menu-item-group>
@@ -34,7 +34,7 @@
                   </el-menu-item-group>
 
                   <el-menu-item-group>
-                    <router-link to=""><el-menu-item index="1-4">其他</el-menu-item></router-link>
+                    <router-link to="/others"><el-menu-item index="1-4">其他</el-menu-item></router-link>
                   </el-menu-item-group>
 
                 </el-submenu>
@@ -105,6 +105,7 @@
 
         <!--内容-->
         <el-main>
+          <router-view></router-view>
 
          <!-- <el-row  >
             <el-col :span="24">
@@ -127,7 +128,7 @@
             </el-col>
           </el-row>-->
 
-          <el-row :gutter="24" class="tac">
+          <!--<el-row :gutter="24" class="tac">
             <template>
             <el-table :data="tableData" style="width: 100%">
               <el-table-column
@@ -169,8 +170,8 @@
               layout="prev, pager, next"
               :total="50">
             </el-pagination>
-            </el-row>
-          <book></book>
+            </el-row>-->
+          <!--<book></book>-->
 
         </el-main>
 
