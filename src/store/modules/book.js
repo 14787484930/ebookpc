@@ -7,7 +7,7 @@ const state = {
 
   books:null,
   page:{
-    pageSize:3,
+    pageSize:6,
     pageNumber:1
   }
 }
@@ -18,6 +18,13 @@ const getters = {
       return null;
     }
     return state.books.page.pageInfo.list;
+  },
+  totalPages(state){
+    if(state.books == null){
+      return null;
+    }
+    //alert(state.books.page.pageInfo.pages);
+    return state.books.page.pageInfo.pages * 10;
   }
 }
 
@@ -25,7 +32,7 @@ const actions = {
 
   getbooks({commit,state}){
 
-    alert(123);
+    //alert(123);
 
     //请求参数的封装
     var data = {
@@ -39,9 +46,7 @@ const actions = {
   },
 
   changeNum({commit,state},currentPage){
-    //alert(123);
-    alert(currentPage.valueOf());
-    commit('change_num');
+    commit('change_num',currentPage);
   }
 
 }
@@ -54,7 +59,6 @@ const mutations = {
 
   //分页是选择的页码
   ['change_num'](state,pageNumber){
-    //console.log(88888888888888);
     state.page.pageNumber = pageNumber;
   }
 

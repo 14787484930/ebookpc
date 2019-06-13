@@ -77,11 +77,10 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="100"
+        :total="totalPages"
         @current-change="current_change">
       </el-pagination>
     </el-row>
-
 
   </div>
 </template>
@@ -97,6 +96,8 @@
     computed:{
       ...mapGetters({
         list:'books',
+        totalPages:'totalPages'
+
     })
      /* ...mapState([
         "page"
@@ -115,9 +116,7 @@
       ),*/
 
       current_change(currentPage) {
-
-        //alert(currentPage);
-        this.$store.dispatch('changeNum',{currentPage});
+        this.$store.dispatch('changeNum',currentPage);
         this.$store.dispatch('getbooks');
 
       }
