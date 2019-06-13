@@ -3,7 +3,7 @@
 
     <el-container  style="height: 98vh">
       <!--头部-->
-      <el-header><span style="font-size: 42px;">西林易市</span></el-header>
+      <el-header><span style="font-size: 42px;">啦啦啦</span></el-header>
 
       <!--中部-->
       <el-container >
@@ -142,9 +142,9 @@
   import book from "./components/book/book.vue";
 
   export default {
-    data(){
+    /*data(){
       return '';
-    },
+    },*/
     methods: {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);

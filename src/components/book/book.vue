@@ -1,10 +1,11 @@
 <template>
   <div>
+
     <h1>图书内容</h1>
 
     <el-row :gutter="24" class="tac">
       <template>
-        <el-table :data="books.page.pageInfo.list" style="width: 100%">
+        <el-table :data="list" style="width: 100%">
 
           <el-table-column label="书名" width="180">
             <template slot-scope="scope">
@@ -71,6 +72,7 @@
         </el-table>
       </template>
     </el-row>
+
     <el-row :gutter="24" class="tac" style="margin-top: 20px;">
       <el-pagination
         background
@@ -85,13 +87,20 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex'
+  import {mapState,mapGetters,mapActions} from 'vuex'
   export default {
 
+    /*data(){
+      return
+    },*/
+
     computed:{
-      ...mapGetters([
-        'books'
-      ])
+      ...mapGetters({
+        list:'books',
+    })
+     /* ...mapState([
+        "page"
+      ])*/
     },
 
     //组件加载完后执行的方法
@@ -100,9 +109,16 @@
     },
 
     methods: {
+
+     /* ...mapActions(
+        //"changeNum"
+      ),*/
+
       current_change(currentPage) {
 
-        alert(currentPage);
+        //alert(currentPage);
+        this.$store.dispatch('changeNum',{currentPage});
+        this.$store.dispatch('getbooks');
 
       }
     }

@@ -5,6 +5,7 @@ import App from './App'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
+import qs from 'qs'
 
 import store from './store/index.js'
 
@@ -17,6 +18,7 @@ new Vue({
   el: '#app',
   router,
   store,
+  qs,
   components: { App },
   template: '<App/>'
 })

@@ -1,33 +1,63 @@
 import types from '../types.js'
 import axios from 'axios'
+import qs from 'qs'
+import BaseConfig from '../.././BaseConfig.js'
 
 const state = {
 
-  books:{}
+  books:null,
+  page:{
+    pageSize:3,
+    pageNumber:1
+  }
 }
 
 const getters = {
   books(state){
-    //console.log(state.books);
-    return state.books;
+    if(state.books == null){
+      return null;
+    }
+    return state.books.page.pageInfo.list;
   }
 }
 
 const actions = {
 
   getbooks({commit,state}){
-    axios.get('http://localhost:8080/book/books?pageNumber=1&pageSize=2&flag=1').then(resp => {
-      console.log(resp);
+
+    alert(123);
+
+    //请求参数的封装
+    var data = {
+      pageNumber:state.page.pageNumber,
+      pageSize:state.page.pageSize
+    }
+
+    axios.post(BaseConfig.BaseUrl.url + 'book/books',qs.stringify(data)).then(resp => {
       commit('get_books',resp);
     })
+  },
+
+  changeNum({commit,state},currentPage){
+    //alert(123);
+    alert(currentPage.valueOf());
+    commit('change_num');
   }
+
 }
 
 const mutations = {
+  //请求数据列表存于state
   ['get_books'](state,resp){
     state.books = resp.data;
-    console.log(state.books);
+  },
+
+  //分页是选择的页码
+  ['change_num'](state,pageNumber){
+    //console.log(88888888888888);
+    state.page.pageNumber = pageNumber;
   }
+
 }
 
 
