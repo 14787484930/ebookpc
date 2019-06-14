@@ -9,35 +9,49 @@ const state = {
   page:{
     pageSize:6,
     pageNumber:1
-  }
+  },
+  bookTypes:null,
+  formDate:null
 }
 
 const getters = {
+  //返回图书列表
   books(state){
     if(state.books == null){
       return null;
     }
     return state.books.page.pageInfo.list;
   },
+
+  //返回总页数
   totalPages(state){
     if(state.books == null){
       return null;
     }
     //alert(state.books.page.pageInfo.pages);
     return state.books.page.pageInfo.pages * 10;
+  },
+
+  //返回图书类型
+  bookTypes(state){
+    if(state.bookTypes == null){
+      //alert('为空！');
+      return null;
+    }
+    return state.bookTypes.booktypes;
   }
 }
 
 const actions = {
 
+  //从服务器加载图书列表
   getbooks({commit,state}){
-
-    //alert(123);
 
     //请求参数的封装
     var data = {
       pageNumber:state.page.pageNumber,
-      pageSize:state.page.pageSize
+      pageSize:state.page.pageSize,
+      bookName:
     }
 
     axios.post(BaseConfig.BaseUrl.url + 'book/books',qs.stringify(data)).then(resp => {
@@ -45,9 +59,21 @@ const actions = {
     })
   },
 
+  //分页刷新
   changeNum({commit,state},currentPage){
     commit('change_num',currentPage);
+  },
+
+  //从服务器加载图书类型
+  getbooktypes({commit,state}){
+
+    axios.post(BaseConfig.BaseUrl.url + 'booktype/booktypes').then(resp => {
+      console.log(resp.data);
+      commit('get_booktypes',resp);
+    })
+
   }
+
 
 }
 
@@ -60,6 +86,10 @@ const mutations = {
   //分页是选择的页码
   ['change_num'](state,pageNumber){
     state.page.pageNumber = pageNumber;
+  },
+
+  ['get_booktypes'](state,resp){
+    state.bookTypes = resp.data.page;
   }
 
 }

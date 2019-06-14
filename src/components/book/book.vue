@@ -12,27 +12,31 @@
                </el-form-item>
 
                <el-form-item label="图书类型">
-                 <el-select placeholder="图书类型" v-model="form.bookType">
-                   <el-option label="计算机" value="shanghai"></el-option>
-                   <el-option label="文学" value="beijing"></el-option>
+                 <el-select v-model="form.bookType" clearable placeholder="请选择">
+                   <el-option
+                     v-for="item in options"
+                     :key="item.id"
+                     :label="item.name"
+                     :value="item.id">
+                   </el-option>
                  </el-select>
                </el-form-item>
 
                <el-form-item label="活动时间">
                  <el-col :span="11">
-                   <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                   <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;"></el-date-picker>
                  </el-col>
 
                  <el-col class="line" :span="2">-</el-col>
 
                  <el-col :span="11">
-                   <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+                   <el-date-picker type="date" placeholder="选择日期" v-model="form.endTime" style="width: 100%;"></el-date-picker>
                  </el-col>
 
                </el-form-item>
 
                <el-form-item>
-                 <el-button type="primary" >查询</el-button>
+                 <el-button type="primary" @submit="queryData">查询</el-button>
                </el-form-item>
 
              </el-form>
@@ -131,7 +135,7 @@
           bookName: '',
           startTime: '',
           endTime: '',
-          type: []
+          bookType: ''
         }
       }
     },
@@ -139,7 +143,8 @@
     computed:{
       ...mapGetters({
         list:'books',
-        totalPages:'totalPages'
+        totalPages:'totalPages',
+        options:'bookTypes'
 
     })
      /* ...mapState([
@@ -150,6 +155,7 @@
     //组件加载完后执行的方法
     created:function(){
       this.$store.dispatch('getbooks');
+      this.$store.dispatch('getbooktypes');
     },
 
     methods: {
@@ -158,9 +164,14 @@
         //"changeNum"
       ),*/
 
+     //分页
       current_change(currentPage) {
         this.$store.dispatch('changeNum',currentPage);
         this.$store.dispatch('getbooks');
+      },
+
+      //搜索
+      queryData(){
 
       }
     }
