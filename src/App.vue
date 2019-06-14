@@ -107,28 +107,6 @@
         <el-main>
           <router-view></router-view>
 
-         <!-- <el-row  >
-            <el-col :span="24">
-
-                <el-form :inline="true"  class="demo-form-inline" style="text-align:left">
-                  <el-form-item label="图书名称">
-                    <el-input  placeholder="图书名称"></el-input>
-                  </el-form-item>
-                  <el-form-item label="图书类型">
-                    <el-select placeholder="图书类型">
-                      <el-option label="计算机" value="shanghai"></el-option>
-                      <el-option label="文学" value="beijing"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item>
-                    <el-button type="primary" @click="onSubmit">查询</el-button>
-                  </el-form-item>
-                </el-form>
-
-            </el-col>
-          </el-row>-->
-
-
 
         </el-main>
 

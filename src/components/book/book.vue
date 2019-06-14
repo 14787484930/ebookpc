@@ -3,6 +3,42 @@
 
     <h1>图书内容</h1>
 
+   <el-row  >
+         <el-col :span="24">
+
+             <el-form :inline="true"  class="demo-form-inline" style="text-align:left">
+               <el-form-item label="图书名称">
+                 <el-input  placeholder="图书名称" v-model="form.bookName"></el-input>
+               </el-form-item>
+
+               <el-form-item label="图书类型">
+                 <el-select placeholder="图书类型" v-model="form.bookType">
+                   <el-option label="计算机" value="shanghai"></el-option>
+                   <el-option label="文学" value="beijing"></el-option>
+                 </el-select>
+               </el-form-item>
+
+               <el-form-item label="活动时间">
+                 <el-col :span="11">
+                   <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                 </el-col>
+
+                 <el-col class="line" :span="2">-</el-col>
+
+                 <el-col :span="11">
+                   <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+                 </el-col>
+
+               </el-form-item>
+
+               <el-form-item>
+                 <el-button type="primary" >查询</el-button>
+               </el-form-item>
+
+             </el-form>
+         </el-col>
+   </el-row>
+
     <el-row :gutter="24" class="tac">
       <template>
         <el-table :data="list" style="width: 100%">
@@ -89,9 +125,16 @@
   import {mapState,mapGetters,mapActions} from 'vuex'
   export default {
 
-    /*data(){
-      return
-    },*/
+    data(){
+      return {
+        form: {
+          bookName: '',
+          startTime: '',
+          endTime: '',
+          type: []
+        }
+      }
+    },
 
     computed:{
       ...mapGetters({
