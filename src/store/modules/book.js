@@ -51,8 +51,11 @@ const actions = {
     var data = {
       pageNumber:state.page.pageNumber,
       pageSize:state.page.pageSize,
-      bookName:
     }
+
+    data = Object.assign(data, state.formDate);
+
+    //console.log("============================="+data);
 
     axios.post(BaseConfig.BaseUrl.url + 'book/books',qs.stringify(data)).then(resp => {
       commit('get_books',resp);
@@ -62,6 +65,11 @@ const actions = {
   //分页刷新
   changeNum({commit,state},currentPage){
     commit('change_num',currentPage);
+  },
+
+  //查询条件数据
+  changeData({commit,state},fdata){
+    commit('change_data',fdata);
   },
 
   //从服务器加载图书类型
@@ -88,6 +96,12 @@ const mutations = {
     state.page.pageNumber = pageNumber;
   },
 
+  //查询条件中的数据
+  ['change_data'](state,fdata){
+    state.formDate = fdata;
+  },
+
+  //保存加载出来的图书类型存于store中
   ['get_booktypes'](state,resp){
     state.bookTypes = resp.data.page;
   }

@@ -36,7 +36,7 @@
                </el-form-item>
 
                <el-form-item>
-                 <el-button type="primary" @submit="queryData">查询</el-button>
+                 <el-button type="primary" @click="queryData">查询</el-button>
                </el-form-item>
 
              </el-form>
@@ -61,7 +61,7 @@
 
           <el-table-column label="图书类型" width="180">
             <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.bookType }}</span>
+              <span >{{ toType(scope.row.bookType) }}</span>
             </template>
           </el-table-column>
 
@@ -74,7 +74,7 @@
           <el-table-column label="发布日期" width="180">
             <template slot-scope="scope">
               <i class="el-icon-time"></i>
-              <span style="margin-left: 5px">{{ scope.row.createTime }}</span>
+              <span style="margin-left: 5px">{{toDate(scope.row.createTime , 'yyyy-MM-dd HH:mm',false)}}</span>
             </template>
           </el-table-column>
 
@@ -101,7 +101,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                @click="handleEdit(scope.$index, scope.row)">查看</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -153,9 +153,11 @@
     },
 
     //组件加载完后执行的方法
+    beforeCreate:function(){
+      this.$store.dispatch('getbooktypes');
+    },
     created:function(){
       this.$store.dispatch('getbooks');
-      this.$store.dispatch('getbooktypes');
     },
 
     methods: {
@@ -173,7 +175,80 @@
       //搜索
       queryData(){
 
+        //alert(123)
+         //将当前页初始化为1
+        this.$store.dispatch('changeNum',1);
+
+        //将form赋值给formDate
+        this.$store.dispatch('changeData',this.form);
+
+        //调用方法进行搜索
+        this.$store.dispatch('getbooks');
+        //console.log(this.$store.state)
+      },
+
+      //日期转换
+      toDate(value, formatString, isString) {
+        if (value === undefined || value == null || value.length === 0)
+          return value;
+
+        if (typeof (value) === "object") {
+          value = value.toString();
+        }
+
+        if (formatString === undefined || formatString == null || formatString.length === 0)
+          formatString = "yyyy-MM-dd";
+        value=value.toString();
+        var ret = '', d = "";
+        if (value.indexOf("/Date(") > -1 || value.indexOf(")/") > -1||parseInt(value)>0) {  // 时间戳格式
+          value = value.replace("/Date(", "").replace(")/", "");
+          d = new Date(parseInt(value, 10));
+        } else { // 普通字符串格式
+          d = new Date(value);
+        }
+
+        var second = '' + d.getSeconds(),
+          minutes = '' + d.getMinutes(),
+          hours = '' + d.getHours(),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        if (hours.length < 2) hours = '0' + hours;
+        if (minutes.length < 2) minutes = '0' + minutes;
+        if (second.length < 2) second = '0' + second;
+        if (formatString === 'yyyy-MM-dd HH:mm:ss')
+          ret = [year, month, day].join('-') + " " + [hours, minutes, second].join(':');
+        else if (formatString === 'yyyy-MM-dd HH:mm')
+          ret = [year, month, day].join('-') + " " + [hours, minutes].join(':');
+        else if (formatString === 'MM-dd')
+          ret = [month, day].join('-');
+        else if (formatString === 'HH:mm')
+          ret = [hours, minutes].join(':');
+        else if (formatString === 'MM-dd HH:mm') {
+          if (isString && value.length <= 10) {
+            ret = [month, day].join('-');
+          }
+          else {
+            ret = [month, day].join('-') + " " + [hours, minutes].join(':');
+          }
+        } else
+          ret = [year, month, day].join('-');
+
+        return ret;
+      },
+
+      //图书类型转换
+      toType(type){
+        //console.log(666);
+        var obj = this.options.find(obj =>{
+            return obj.id == type;
+        });
+        return obj.name;
       }
+
+
     }
   }
 
