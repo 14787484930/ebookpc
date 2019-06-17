@@ -157,6 +157,6 @@
 
   .el-main {
     color: #333;
-    text-align: center;
+
   }
-</style>
+</style>/*text-align: center;*/

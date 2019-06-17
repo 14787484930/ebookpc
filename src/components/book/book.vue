@@ -3,45 +3,45 @@
 
     <h1>图书内容</h1>
 
-   <el-row  >
-         <el-col :span="24">
+    <el-row  >
+      <el-col :span="24">
 
-             <el-form :inline="true"  class="demo-form-inline" style="text-align:left">
-               <el-form-item label="图书名称">
-                 <el-input  placeholder="图书名称" v-model="form.bookName"></el-input>
-               </el-form-item>
+        <el-form :inline="true"  class="demo-form-inline" style="text-align:left">
+          <el-form-item label="图书名称">
+            <el-input  placeholder="图书名称" v-model="form.bookName"></el-input>
+          </el-form-item>
 
-               <el-form-item label="图书类型">
-                 <el-select v-model="form.bookType" clearable placeholder="请选择">
-                   <el-option
-                     v-for="item in options"
-                     :key="item.id"
-                     :label="item.name"
-                     :value="item.id">
-                   </el-option>
-                 </el-select>
-               </el-form-item>
+          <el-form-item label="图书类型">
+            <el-select v-model="form.bookType" clearable placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
 
-               <el-form-item label="活动时间">
-                 <el-col :span="11">
-                   <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;"></el-date-picker>
-                 </el-col>
+          <el-form-item label="活动时间">
+            <el-col :span="11">
+              <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;"></el-date-picker>
+            </el-col>
 
-                 <el-col class="line" :span="2">-</el-col>
+            <el-col class="line" :span="2">-</el-col>
 
-                 <el-col :span="11">
-                   <el-date-picker type="date" placeholder="选择日期" v-model="form.endTime" style="width: 100%;"></el-date-picker>
-                 </el-col>
+            <el-col :span="11">
+              <el-date-picker type="date" placeholder="选择日期" v-model="form.endTime" style="width: 100%;"></el-date-picker>
+            </el-col>
 
-               </el-form-item>
+          </el-form-item>
 
-               <el-form-item>
-                 <el-button type="primary" @click="queryData">查询</el-button>
-               </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="queryData">查询</el-button>
+          </el-form-item>
 
-             </el-form>
-         </el-col>
-   </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
 
     <el-row :gutter="24" class="tac">
       <template>
@@ -101,7 +101,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+                @click="handleEdit(scope.row)">查看</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -122,6 +122,30 @@
       </el-pagination>
     </el-row>
 
+    <!--弹出框-->
+    <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
+
+    <el-dialog title="图书详情" :visible.sync="dialogFormVisible" style="float: left">
+
+      <el-row :gutter="24">
+        <el-col :span="10" :offset="3"><div style="float: left">1</div></el-col>
+        <el-col :span="11"><div style="float: left">1</div></el-col>
+      </el-row>
+      <el-row :gutter="24">
+        <el-col :span="10" :offset="3"><div>1</div></el-col>
+        <el-col :span="11"><div>1</div></el-col>
+      </el-row>
+      <el-row :gutter="24">
+        <el-col :span="10" :offset="3"><div>1</div></el-col>
+        <el-col :span="11"><div>1</div></el-col>
+      </el-row>
+
+      <div slot="footer" class="dialog-footer">
+        <el-col :span="10" :offset="3"><div>1</div></el-col>
+        <el-col :span="11"><div>1</div></el-col>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -136,7 +160,9 @@
           startTime: '',
           endTime: '',
           bookType: ''
-        }
+        },
+        dialogFormVisible:false,
+        bookInfo:''
       }
     },
 
@@ -146,10 +172,10 @@
         totalPages:'totalPages',
         options:'bookTypes'
 
-    })
-     /* ...mapState([
-        "page"
-      ])*/
+      })
+      /* ...mapState([
+         "page"
+       ])*/
     },
 
     //组件加载完后执行的方法
@@ -162,11 +188,11 @@
 
     methods: {
 
-     /* ...mapActions(
-        //"changeNum"
-      ),*/
+      /* ...mapActions(
+         //"changeNum"
+       ),*/
 
-     //分页
+      //分页
       current_change(currentPage) {
         this.$store.dispatch('changeNum',currentPage);
         this.$store.dispatch('getbooks');
@@ -176,7 +202,7 @@
       queryData(){
 
         //alert(123)
-         //将当前页初始化为1
+        //将当前页初始化为1
         this.$store.dispatch('changeNum',1);
 
         //将form赋值给formDate
@@ -243,9 +269,16 @@
       toType(type){
         //console.log(666);
         var obj = this.options.find(obj =>{
-            return obj.id == type;
+          return obj.id == type;
         });
         return obj.name;
+      },
+
+      handleEdit(row){
+
+
+        console.log(row.id);
+        console.log(row.bookName);
       }
 
 
@@ -255,5 +288,7 @@
 </script>
 
 <style lang="less" scoped>
-
+  .el-dialog{
+    text-align: center;
+  }
 </style>
