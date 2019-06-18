@@ -129,6 +129,18 @@
     <el-dialog title="图书详情" :visible.sync="dialogFormVisible" style="float: left">
 
       <el-row :gutter="24">
+        <el-col :span="18" :offset="3">
+        <el-carousel :interval="5000" arrow="always">
+          <el-carousel-item v-for="item in pics" :key="item">
+            <div class="block">
+              <el-image :src="item"></el-image>
+            </div>
+          </el-carousel-item>
+        </el-carousel>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="24" style="margin-top: 30px">
         <el-col :span="8" :offset="4"><div>图书名称</div></el-col>
         <el-col :span="11"><div style="float: left">{{bookInfo.bookName}}</div></el-col>
       </el-row>
@@ -175,6 +187,7 @@
 
 <script>
   import {mapState,mapGetters,mapActions} from 'vuex'
+  import baseConfig from '../.././BaseConfig.js'
   export default {
 
     data(){
@@ -194,7 +207,8 @@
           phone:'',
           createTime:'',
           viewTimes:''
-        }
+        },
+        pics:[]
       }
     },
 
@@ -312,8 +326,16 @@
       handleEdit(row){
 
         this.bookInfo = row;
-        //console.log(this.bookInfo)
+
+        var pic = row.bookPic.split(',');
+        this.pics = [];
+        for(var index in pic){
+          this.pics[index] = baseConfig.BaseUrl.picUrl + pic[index];
+        }
         this.dialogFormVisible = true;
+
+        console.log(this.pics.length);
+        console.log(pic);
 
       }
 
@@ -324,7 +346,19 @@
 </script>
 
 <style lang="less" scoped>
-  .el-dialog{
-    text-align: center;
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 18px;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
   }
 </style>
