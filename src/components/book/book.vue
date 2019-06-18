@@ -62,6 +62,7 @@
           <el-table-column label="图书类型" width="180">
             <template slot-scope="scope">
               <span >{{ toType(scope.row.bookType) }}</span>
+              <!--<span >{{ scope.row.bookType}}</span>-->
             </template>
           </el-table-column>
 
@@ -123,27 +124,50 @@
     </el-row>
 
     <!--弹出框-->
-    <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>
+    <!--<el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>-->
 
     <el-dialog title="图书详情" :visible.sync="dialogFormVisible" style="float: left">
 
       <el-row :gutter="24">
-        <el-col :span="10" :offset="3"><div style="float: left">1</div></el-col>
-        <el-col :span="11"><div style="float: left">1</div></el-col>
-      </el-row>
-      <el-row :gutter="24">
-        <el-col :span="10" :offset="3"><div>1</div></el-col>
-        <el-col :span="11"><div>1</div></el-col>
-      </el-row>
-      <el-row :gutter="24">
-        <el-col :span="10" :offset="3"><div>1</div></el-col>
-        <el-col :span="11"><div>1</div></el-col>
+        <el-col :span="8" :offset="4"><div>图书名称</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.bookName}}</div></el-col>
       </el-row>
 
-      <div slot="footer" class="dialog-footer">
-        <el-col :span="10" :offset="3"><div>1</div></el-col>
-        <el-col :span="11"><div>1</div></el-col>
-      </div>
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>作者</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.author}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>类型</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.bookType}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>价格</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.bookPrice}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>发布日期</div></el-col>
+        <el-col :span="11"><div style="float: left">{{toDate(bookInfo.createTime , 'yyyy-MM-dd HH:mm',false)}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+         <el-col :span="8" :offset="4"><div>微信</div></el-col>
+         <el-col :span="11"><div style="float: left">{{bookInfo.weiXin}}</div></el-col>
+       </el-row>
+
+       <el-row :gutter="24">
+         <el-col :span="8" :offset="4"><div>联系电电话</div></el-col>
+         <el-col :span="11"><div style="float: left">{{bookInfo.phone}}</div></el-col>
+       </el-row>
+
+       <el-row :gutter="24">
+         <el-col :span="8" :offset="4"><div>浏览次数</div></el-col>
+         <el-col :span="11"><div style="float: left">{{bookInfo.viewTimes}}</div></el-col>
+       </el-row>
+
     </el-dialog>
 
   </div>
@@ -162,7 +186,15 @@
           bookType: ''
         },
         dialogFormVisible:false,
-        bookInfo:''
+        bookInfo:{
+          bookName:'',
+          bookType:'',
+          bookPrice:'',
+          weiXin:'',
+          phone:'',
+          createTime:'',
+          viewTimes:''
+        }
       }
     },
 
@@ -268,6 +300,9 @@
       //图书类型转换
       toType(type){
         //console.log(666);
+        if(this.options == null){
+          return;
+        }
         var obj = this.options.find(obj =>{
           return obj.id == type;
         });
@@ -276,9 +311,10 @@
 
       handleEdit(row){
 
+        this.bookInfo = row;
+        //console.log(this.bookInfo)
+        this.dialogFormVisible = true;
 
-        console.log(row.id);
-        console.log(row.bookName);
       }
 
 
