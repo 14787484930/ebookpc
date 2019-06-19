@@ -106,7 +106,7 @@
               <el-button
                 size="mini"
                 type="danger"
-                @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                @click="handleDelete(scope.row)">删除</el-button>
             </template>
           </el-table-column>
 
@@ -182,12 +182,17 @@
 
     </el-dialog>
 
+    <!--确认消息-->
+    <!--<el-button type="text" @click="open">点击打开 Message Box</el-button>-->
+
   </div>
 </template>
 
 <script>
   import {mapState,mapGetters,mapActions} from 'vuex'
   import baseConfig from '../.././BaseConfig.js'
+  import axios from 'axios'
+  import qs from 'qs'
   export default {
 
     data(){
@@ -323,6 +328,7 @@
         return obj.name;
       },
 
+      //查看详情
       handleEdit(row){
 
         this.bookInfo = row;
@@ -333,12 +339,37 @@
           this.pics[index] = baseConfig.BaseUrl.picUrl + pic[index];
         }
         this.dialogFormVisible = true;
+      },
 
-        console.log(this.pics.length);
-        console.log(pic);
+      //删除
+     handleDelete(row) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'error'
+        }).then(() => {
 
+          //调用方法进行删除
+          var data = {
+            id:row.id
+          }
+          console.log(data);
+          axios.post(baseConfig.BaseUrl.url + 'book/delete',qs.stringify(data)).then(resp => {
+            //进项数据刷新
+            this.$store.dispatch('getbooks');
+            //提示消息
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }).catch(function (error) {
+            this.$message({
+              type: 'info',
+              message: '删除失败!'
+            });
+          })
+        })
       }
-
 
     }
   }

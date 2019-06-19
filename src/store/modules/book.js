@@ -76,11 +76,29 @@ const actions = {
   getbooktypes({commit,state}){
 
     axios.post(BaseConfig.BaseUrl.url + 'booktype/booktypes').then(resp => {
-      console.log(resp.data);
+      //console.log(resp.data);
       commit('get_booktypes',resp);
     })
 
-  }
+  },
+
+  //删除操作
+  /*delete({commit,state},bookId){
+
+    //请求参数的封装
+    var data = {
+      id:bookId
+    }
+    console.log("============================="+bookId);
+
+    axios.post(BaseConfig.BaseUrl.url + 'book/aaa',qs.stringify(data)).then(resp => {
+      //return true;
+    }).catch(function (error) {
+      //return false;
+    })
+    return true;
+  },*/
+
 
 
 }
