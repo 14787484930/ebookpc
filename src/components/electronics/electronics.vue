@@ -354,9 +354,6 @@
       //查看详情
       handleEdit(row){
 
-        console.log(123456);
-        alert(123);
-
         this.electronicsInfo = row;
 
         var pic = row.electronicsPic.split(',');
