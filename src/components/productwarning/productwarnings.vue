@@ -1,18 +1,18 @@
 <template>
   <div>
 
-    <h1>电子内容</h1>
+    <h1>产品预警内容</h1>
 
     <el-row  >
       <el-col :span="24">
 
         <el-form :inline="true"  class="demo-form-inline" style="text-align:left">
-          <el-form-item label="电子名称">
-            <el-input  placeholder="电子名称" v-model="form.electronicsName"></el-input>
+          <el-form-item label="商品名称">
+            <el-input  placeholder="商品名称" v-model="form.productName"></el-input>
           </el-form-item>
 
-          <el-form-item label="电子类型">
-            <el-select v-model="form.electronicsType" clearable placeholder="请选择">
+          <el-form-item label="举报类型">
+            <el-select v-model="form.reportType" clearable placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.id"
@@ -22,7 +22,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="活动时间">
+          <el-form-item label="发布时间">
             <el-col :span="11">
               <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;"></el-date-picker>
             </el-col>
@@ -47,28 +47,28 @@
       <template>
         <el-table :data="list" style="width: 100%">
 
-          <el-table-column label="书名" width="180">
+          <el-table-column label="商品名称" width="180">
             <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.electronicsName }}</span>
+              <span style="margin-left: 5px">{{ scope.row.productName }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="电子类型" width="180">
+          <el-table-column label="商品类型" width="180">
             <template slot-scope="scope">
-              <span >{{ toType(scope.row.electronicsType) }}</span>
-              <!--<span >{{ scope.row.bookType}}</span>-->
+              <span style="margin-left: 5px">{{ scope.row.productType }}</span>
             </template>
           </el-table-column>
 
-          <el-table-column label="原价" width="180">
+          <el-table-column label="举报类型" width="180">
             <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.originalPrice }}</span>
+              <span >{{ toType(scope.row.reportType) }}</span>
+              <!--<span >{{ scope.row.reportType}}</span>-->
             </template>
           </el-table-column>
 
-          <el-table-column label="现价" width="180">
+          <el-table-column label="举报人" width="180">
             <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.presentPrice }}</span>
+              <span style="margin-left: 5px">{{ scope.row.weiXin }}</span>
             </template>
           </el-table-column>
 
@@ -79,30 +79,17 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="微信" width="180">
-            <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.weiXin }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="电话" width="180">
-            <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.phone }}</span>
-            </template>
-          </el-table-column>
-
-          <el-table-column label="浏览次数" width="180">
-            <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.viewTimes }}</span>
-            </template>
-          </el-table-column>
-
-
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.row)">查看</el-button>
+                @click="handleEdit(scope.row)">查看举报</el-button>
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.row)">处理商品</el-button>
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.row)">处理</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -118,7 +105,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="totalPages_ele"
+        :total="totalPages"
         @current-change="current_change">
       </el-pagination>
     </el-row>
@@ -126,68 +113,26 @@
     <!--弹出框-->
     <!--<el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button>-->
 
-    <el-dialog title="电子详情" :visible.sync="dialogFormVisible" style="float: left">
-
-      <el-row :gutter="24">
-        <el-col :span="18" :offset="3">
-          <el-carousel :interval="5000" arrow="always">
-            <el-carousel-item v-for="item in pics" :key="item">
-              <div class="block">
-                <el-image :src="item"></el-image>
-              </div>
-            </el-carousel-item>
-          </el-carousel>
-        </el-col>
-      </el-row>
+    <el-dialog title="举报详情" :visible.sync="dialogFormVisible" style="float: left">
 
       <el-row :gutter="24" style="margin-top: 30px">
-        <el-col :span="8" :offset="4"><div>电子名称</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.electronicsName}}</div></el-col>
+        <el-col :span="8" :offset="4"><div>商品名称</div></el-col>
+        <el-col :span="11"><div style="float: left">{{productwarnings.productName}}</div></el-col>
       </el-row>
 
       <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>是否有发票</div></el-col>
-        <el-col :span="11"><div style="float: left">{{hasInvoice(electronicsInfo.hasInvoice)}}</div></el-col>
+        <el-col :span="8" :offset="4"><div>商品类型</div></el-col>
+        <el-col :span="11"><div style="float: left">{{productwarnings.productType}}</div></el-col>
       </el-row>
 
       <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>类型</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.electronicsType}}</div></el-col>
+        <el-col :span="8" :offset="4"><div>举报类型</div></el-col>
+        <el-col :span="11"><div style="float: left">{{productwarnings.reportType}}</div></el-col>
       </el-row>
 
       <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>原价</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.originalPrice}}</div></el-col>
-      </el-row>
-
-      <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>现价</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.presentPrice}}</div></el-col>
-      </el-row>
-
-      <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>购买日期</div></el-col>
-        <el-col :span="11"><div style="float: left">{{toDate(electronicsInfo.buyDate , 'yyyy-MM-dd HH:mm',false)}}</div></el-col>
-      </el-row>
-
-      <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>发布日期</div></el-col>
-        <el-col :span="11"><div style="float: left">{{toDate(electronicsInfo.createTime , 'yyyy-MM-dd HH:mm',false)}}</div></el-col>
-      </el-row>
-
-      <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>微信</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.weiXin}}</div></el-col>
-      </el-row>
-
-      <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>联系电电话</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.phone}}</div></el-col>
-      </el-row>
-
-      <el-row :gutter="24">
-        <el-col :span="8" :offset="4"><div>浏览次数</div></el-col>
-        <el-col :span="11"><div style="float: left">{{electronicsInfo.viewTimes}}</div></el-col>
+        <el-col :span="8" :offset="4"><div>举报人</div></el-col>
+        <el-col :span="11"><div style="float: left">{{productwarnings.weiXin}}</div></el-col>
       </el-row>
 
     </el-dialog>
@@ -208,23 +153,19 @@
     data(){
       return {
         form: {
-          electronicsName: '',
+          bookName: '',
           startTime: '',
           endTime: '',
-          electronicsType: ''
+          reportType: ''
         },
         dialogFormVisible:false,
-        electronicsInfo:{
-          electronicsName:'',
-          electronicsType:'',
-          originalPrice:'',
-          presentPrice:'',
-          buyDate:'',
-          hasInvoice:'',
+        productwarnings:{
+          productName:'',
+          productType:'',
+          reportType:'',
           weiXin:'',
-          phone:'',
+          des:'',
           createTime:'',
-          viewTimes:''
         },
         pics:[]
       }
@@ -232,9 +173,9 @@
 
     computed:{
       ...mapGetters({
-        list:'electronics',
-        totalPages_ele:'totalPages_ele',
-        options:'electronicsTypes'
+        list:'productwarnings',
+        totalPages:'totalPages_report',
+        options:'reportTypes'
 
       })
       /* ...mapState([
@@ -244,10 +185,10 @@
 
     //组件加载完后执行的方法
     beforeCreate:function(){
-      this.$store.dispatch('getelectronicsTypes');
+      this.$store.dispatch('getreporttypes');
     },
     created:function(){
-      this.$store.dispatch('getelectronics');
+      this.$store.dispatch('getproductwarnings');
     },
 
     methods: {
@@ -258,8 +199,9 @@
 
       //分页
       current_change(currentPage) {
+        //console.log(123);
         this.$store.dispatch('changeNum',currentPage);
-        this.$store.dispatch('getelectronics');
+        this.$store.dispatch('getproductwarnings');
       },
 
       //搜索
@@ -273,7 +215,7 @@
         this.$store.dispatch('changeData',this.form);
 
         //调用方法进行搜索
-        this.$store.dispatch('getelectronics');
+        this.$store.dispatch('getproductwarnings');
         //console.log(this.$store.state)
       },
 
@@ -329,10 +271,8 @@
         return ret;
       },
 
-      //电子类型转换
+      //图书类型转换
       toType(type){
-
-        //console.log(666);
         if(this.options == null){
           return;
         }
@@ -342,25 +282,10 @@
         return obj.name;
       },
 
-      hasInvoice(type){
-        if(type === 1){
-          return '有';
-        }
-        if(type === 0){
-          return '没有'
-        }
-      },
-
       //查看详情
       handleEdit(row){
 
-        this.electronicsInfo = row;
-
-        var pic = row.electronicsPic.split(',');
-        this.pics = [];
-        for(var index in pic){
-          this.pics[index] = baseConfig.BaseUrl.picUrl + pic[index];
-        }
+        this.productwarnings = row;
         this.dialogFormVisible = true;
       },
 
@@ -375,11 +300,10 @@
           //调用方法进行删除
           var data = {
             id:row.id
-          }
-          //console.log(data);
-          axios.post(baseConfig.BaseUrl.url + 'electronics/delete',qs.stringify(data)).then(resp => {
+          };
+          axios.post(baseConfig.BaseUrl.url + 'book/delete',qs.stringify(data)).then(resp => {
             //进项数据刷新
-            this.$store.dispatch('getelectronics');
+            this.$store.dispatch('getbooks');
             //提示消息
             this.$message({
               type: 'success',

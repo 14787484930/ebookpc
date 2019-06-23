@@ -5,47 +5,47 @@ import BaseConfig from '../.././BaseConfig.js'
 
 const state = {
 
-  books:null,
+  productwarnings:null,
   page:{
     pageSize:6,
     pageNumber:1
   },
-  bookTypes:null,
+  reportTypes:null,
   formDate:null
 }
 
 const getters = {
   //返回图书列表
-  books(state){
-    if(state.books == null){
+  productwarnings(state){
+    if(state.productwarnings == null){
       return null;
     }
-    return state.books.page.pageInfo.list;
+    return state.productwarnings.page.pageinfo.list;
   },
 
   //返回总页数
-  totalPages(state){
-    if(state.books == null){
+  totalPages_report(state){
+    if(state.productwarnings == null){
       return null;
     }
-    //alert(state.books.page.pageInfo.pages);
-    return state.books.page.pageInfo.pages * 10;
+    //alert(state.productwarnings.page.pageInfo.pages);
+    return state.productwarnings.page.pageinfo.pages * 10;
   },
 
   //返回图书类型
-  bookTypes(state){
-    if(state.bookTypes == null){
+  reportTypes(state){
+    if(state.reportTypes == null){
       //alert('为空！');
       return null;
     }
-    return state.bookTypes.booktypes;
+    return state.reportTypes.pageinfo;
   }
 }
 
 const actions = {
 
   //从服务器加载图书列表
-  getbooks({commit,state}){
+  getproductwarnings({commit,state}){
 
     //请求参数的封装
     var data = {
@@ -54,11 +54,8 @@ const actions = {
     }
 
     data = Object.assign(data, state.formDate);
-
-    //console.log("============================="+data);
-
-    axios.post(BaseConfig.BaseUrl.url + 'book/books',qs.stringify(data)).then(resp => {
-      commit('get_books',resp);
+    axios.post(BaseConfig.BaseUrl.url + 'reportproduct/reportproducts',qs.stringify(data)).then(resp => {
+      commit('get_productwarnings',resp);
     })
   },
 
@@ -73,11 +70,10 @@ const actions = {
   },
 
   //从服务器加载图书类型
-  getbooktypes({commit,state}){
+  getreporttypes({commit,state}){
 
-    axios.post(BaseConfig.BaseUrl.url + 'booktype/booktypes').then(resp => {
-      //console.log(resp.data);
-      commit('get_booktypes',resp);
+    axios.post(BaseConfig.BaseUrl.url + 'reporttype/reporttypeinfo').then(resp => {
+      commit('get_reporttypes',resp);
     })
 
   },
@@ -105,8 +101,10 @@ const actions = {
 
 const mutations = {
   //请求数据列表存于state
-  ['get_books'](state,resp){
-    state.books = resp.data;
+  ['get_productwarnings'](state,resp){
+    state.productwarnings = resp.data;
+
+    //console.log("==========================" + state.productwarnings);
   },
 
   //分页是选择的页码
@@ -120,8 +118,8 @@ const mutations = {
   },
 
   //保存加载出来的图书类型存于store中
-  ['get_booktypes'](state,resp){
-    state.bookTypes = resp.data.page;
+  ['get_reporttypes'](state,resp){
+    state.reportTypes = resp.data.page;
   }
 
 }

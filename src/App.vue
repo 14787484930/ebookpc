@@ -47,7 +47,7 @@
                   </template>
 
                   <el-menu-item-group>
-                    <el-menu-item index="2-1">产品预警</el-menu-item>
+                    <router-link to="/productwarnings"><el-menu-item index="2-1">产品预警</el-menu-item></router-link>
                   </el-menu-item-group>
 
                   <el-menu-item-group>

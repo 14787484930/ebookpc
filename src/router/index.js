@@ -5,6 +5,7 @@ import books from "../components/book/book.vue"
 import electronics from "../components/electronics/electronics.vue"
 import tutorings from "../components/tutoring/tutoring.vue"
 import others from "../components/other/others.vue"
+import productwarnings from "../components/productwarning/productwarnings.vue"
 
 Vue.use(Router)
 
@@ -25,6 +26,10 @@ export default new Router({
     {
       path:"/others",
       component:others
+    },
+    {
+      path:"/productwarnings",
+      component:productwarnings
     },
   ]
 })

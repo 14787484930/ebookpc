@@ -6,7 +6,7 @@ import book from './modules/book.js'
 import electronics from './modules/electronics.js'
 import other from './modules/other.js'
 import tutoring from './modules/tutoring.js'
-import productwarning from '/node_modules/productwarning.js'
+import productwarning from './modules/productwarning.js'
 
 
 Vue.use(Vuex);
@@ -19,6 +19,7 @@ export default new Vuex.Store({
     book,
     electronics,
     other,
-    tutoring
+    tutoring,
+    productwarning
   }
 })
