@@ -24,13 +24,13 @@
 
           <el-form-item label="发布时间">
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
             </el-col>
 
             <el-col class="line" :span="2">-</el-col>
 
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.endTime" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" placeholder="选择日期" v-model="form.endTime" style="width: 100%;" value-format="yyyy-MM-dd"></el-date-picker>
             </el-col>
 
           </el-form-item>
