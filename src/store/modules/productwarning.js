@@ -6,6 +6,7 @@ import BaseConfig from '../.././BaseConfig.js'
 const state = {
 
   productwarnings:null,
+  productInfo:null,
   page:{
     pageSize:6,
     pageNumber:1
@@ -39,7 +40,15 @@ const getters = {
       return null;
     }
     return state.reportTypes.pageinfo;
-  }
+  },
+
+  //返回图书信息
+  productInfo(state){
+    if(state.bookInfo == null){
+      return null;
+    }
+    return state.bookInfo;
+  },
 }
 
 const actions = {
@@ -74,6 +83,16 @@ const actions = {
 
     axios.post(BaseConfig.BaseUrl.url + 'reporttype/reporttypeinfo').then(resp => {
       commit('get_reporttypes',resp);
+    })
+
+  },
+  //获取商品详情
+  getProduct({commit,state},productUsrl){
+
+    //console.log(BaseConfig.BaseUrl.url + productUsrl);
+
+    axios.post(BaseConfig.BaseUrl.url + productUsrl).then(resp => {
+      commit('get_product',resp);
     })
 
   },
@@ -120,6 +139,11 @@ const mutations = {
   //保存加载出来的图书类型存于store中
   ['get_reporttypes'](state,resp){
     state.reportTypes = resp.data.page;
+  },
+
+  //保存加载出来的图书类型存于store中
+  ['get_product'](state,resp){
+    state.productInfo = resp.data.page.info;
   }
 
 }

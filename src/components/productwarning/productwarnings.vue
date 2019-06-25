@@ -55,7 +55,7 @@
 
           <el-table-column label="商品类型" width="180">
             <template slot-scope="scope">
-              <span style="margin-left: 5px">{{ scope.row.productType }}</span>
+              <span style="margin-left: 5px">{{ toProductType(scope.row.productType) }}</span>
             </template>
           </el-table-column>
 
@@ -83,12 +83,16 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
+                type="success"
+                plain
                 @click="handleEdit(scope.row)">查看举报</el-button>
               <el-button
                 size="mini"
-                @click="handleEdit(scope.row)">处理商品</el-button>
+                type="success"
+                @click="viewProduct(scope.row)">查看商品</el-button>
               <el-button
                 size="mini"
+                type="primary"
                 @click="handleEdit(scope.row)">处理</el-button>
               <el-button
                 size="mini"
@@ -137,8 +141,62 @@
 
     </el-dialog>
 
-    <!--确认消息-->
-    <!--<el-button type="text" @click="open">点击打开 Message Box</el-button>-->
+   <!--图书详情-->
+    <el-dialog title="图书详情" :visible.sync="bookflag" style="float: left">
+
+      <el-row :gutter="24">
+        <el-col :span="18" :offset="3">
+          <el-carousel :interval="5000" arrow="always">
+            <el-carousel-item v-for="item in pics" :key="item">
+              <div class="block">
+                <el-image :src="item"></el-image>
+              </div>
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="24" style="margin-top: 30px">
+        <el-col :span="8" :offset="4"><div>图书名称</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.bookName}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>作者</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.author}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>类型</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.bookType}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>价格</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.bookPrice}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>发布日期</div></el-col>
+        <el-col :span="11"><div style="float: left">{{toDate(bookInfo.createTime , 'yyyy-MM-dd HH:mm',false)}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>微信</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.weiXin}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>联系电电话</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.phone}}</div></el-col>
+      </el-row>
+
+      <el-row :gutter="24">
+        <el-col :span="8" :offset="4"><div>浏览次数</div></el-col>
+        <el-col :span="11"><div style="float: left">{{bookInfo.viewTimes}}</div></el-col>
+      </el-row>
+
+    </el-dialog>
 
   </div>
 </template>
@@ -159,6 +217,7 @@
           reportType: ''
         },
         dialogFormVisible:false,
+        bookflag:false,
         productwarnings:{
           productName:'',
           productType:'',
@@ -166,6 +225,39 @@
           weiXin:'',
           des:'',
           createTime:'',
+        },
+        bookInfo:{
+          bookName:'',
+          bookType:'',
+          bookPrice:'',
+          weiXin:'',
+          phone:'',
+          createTime:'',
+          viewTimes:''
+        },
+        electronicsInfo:{
+          electronicsName:'',
+          electronicsType:'',
+          originalPrice:'',
+          presentPrice:'',
+          buyDate:'',
+          hasInvoice:'',
+          weiXin:'',
+          phone:'',
+          createTime:'',
+          viewTimes:''
+        },
+        tutoringInfo:{
+          name:'',
+          type:'',
+          price:'',
+          startTime:'',
+          endTime:'',
+          place:'',
+          weiXin:'',
+          phone:'',
+          createTime:'',
+          viewTimes:''
         },
         pics:[]
       }
@@ -282,11 +374,55 @@
         return obj.name;
       },
 
-      //查看详情
+      //商品类型
+      toProductType(type){
+        switch (type){
+          case 1: {
+            //图书
+            return '图书';
+          }
+          case 2:{
+            //电子
+            return '电子';
+          }
+          case 3:{
+            //其他
+            return '其他';
+          }
+          return type;
+        }
+      },
+
+      //查看举报详情
       handleEdit(row){
 
         this.productwarnings = row;
         this.dialogFormVisible = true;
+      },
+
+      //查看商品详情
+      viewProduct(row){
+
+        var flag = row.productType;
+        //alert(row.productId);
+        switch (flag){
+          case 1: {
+            //图书 加载图书信息
+            //this.$store.dispatch('getProduct','book/getById/' + row.productId);
+            //this.bookInfo = this.$store.state.productInfo
+            this.bookflag = true;
+            break;
+          }
+          case 2:{
+            //电子
+            break;
+          }
+          case 3:{
+            //其他
+            break;
+          }
+
+        }
       },
 
       //删除
