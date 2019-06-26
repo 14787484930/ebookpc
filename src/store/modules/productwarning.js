@@ -139,6 +139,7 @@ const mutations = {
   //保存加载出来的图书类型存于store中
   ['get_reporttypes'](state,resp){
     state.reportTypes = resp.data.page;
+    //console.log(state.reportTypes);
   },
 
   //保存加载出来的图书类型存于store中

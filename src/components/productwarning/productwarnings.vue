@@ -126,12 +126,13 @@
 
       <el-row :gutter="24">
         <el-col :span="8" :offset="4"><div>商品类型</div></el-col>
-        <el-col :span="11"><div style="float: left">{{productwarnings.productType}}</div></el-col>
+        <el-col :span="11"><div style="float: left">{{toProductType(productwarnings.productType)}}</div></el-col>
       </el-row>
 
       <el-row :gutter="24">
         <el-col :span="8" :offset="4"><div>举报类型</div></el-col>
-        <el-col :span="11"><div style="float: left">{{productwarnings.reportType}}</div></el-col>
+        <el-col :span="11"><div style="float: left">{{toType(productwarnings.reportType)}}</div></el-col>
+        <!--<el-col :span="11"><div style="float: left">{{productwarnings.reportType}}</div></el-col>-->
       </el-row>
 
       <el-row :gutter="24">
@@ -214,7 +215,7 @@
           bookName: '',
           startTime: '',
           endTime: '',
-          reportType: ''
+          reportType: null
         },
         dialogFormVisible:false,
         bookflag:false,
@@ -365,6 +366,8 @@
 
       //图书类型转换
       toType(type){
+
+        console.log(type);
         if(this.options == null){
           return;
         }
@@ -410,15 +413,18 @@
             //图书 加载图书信息
             //this.$store.dispatch('getProduct','book/getById/' + row.productId);
             //this.bookInfo = this.$store.state.productInfo
+            alert('图书');
             this.bookflag = true;
             break;
           }
           case 2:{
             //电子
+            alert('电子');
             break;
           }
           case 3:{
             //其他
+            alert('其他');
             break;
           }
 
