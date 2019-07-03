@@ -131,8 +131,8 @@
 
       <el-row :gutter="24">
         <el-col :span="8" :offset="4"><div>举报类型</div></el-col>
-        <el-col :span="11"><div style="float: left">{{toType(productwarnings.reportType)}}</div></el-col>
-        <!--<el-col :span="11"><div style="float: left">{{productwarnings.reportType}}</div></el-col>-->
+        <!--<el-col :span="11"><div style="float: left">{{toType(productwarnings.reportType)}}</div></el-col>-->
+        <el-col :span="11"><div style="float: left">{{productwarnings.reportType}}</div></el-col>
       </el-row>
 
       <el-row :gutter="24">
@@ -292,7 +292,6 @@
 
       //分页
       current_change(currentPage) {
-        //console.log(123);
         this.$store.dispatch('changeNum',currentPage);
         this.$store.dispatch('getproductwarnings');
       },
@@ -309,7 +308,6 @@
 
         //调用方法进行搜索
         this.$store.dispatch('getproductwarnings');
-        //console.log(this.$store.state)
       },
 
       //日期转换
@@ -367,7 +365,6 @@
       //图书类型转换
       toType(type){
 
-        console.log(type);
         if(this.options == null){
           return;
         }

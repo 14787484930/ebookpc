@@ -89,8 +89,6 @@ const actions = {
   //获取商品详情
   getProduct({commit,state},productUsrl){
 
-    //console.log(BaseConfig.BaseUrl.url + productUsrl);
-
     axios.post(BaseConfig.BaseUrl.url + productUsrl).then(resp => {
       commit('get_product',resp);
     })
@@ -104,7 +102,6 @@ const actions = {
     var data = {
       id:bookId
     }
-    console.log("============================="+bookId);
 
     axios.post(BaseConfig.BaseUrl.url + 'book/aaa',qs.stringify(data)).then(resp => {
       //return true;
@@ -123,7 +120,6 @@ const mutations = {
   ['get_productwarnings'](state,resp){
     state.productwarnings = resp.data;
 
-    //console.log("==========================" + state.productwarnings);
   },
 
   //分页是选择的页码
@@ -139,7 +135,6 @@ const mutations = {
   //保存加载出来的图书类型存于store中
   ['get_reporttypes'](state,resp){
     state.reportTypes = resp.data.page;
-    //console.log(state.reportTypes);
   },
 
   //保存加载出来的图书类型存于store中
